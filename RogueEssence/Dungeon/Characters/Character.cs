@@ -328,6 +328,8 @@ namespace RogueEssence.Dungeon
         public bool SeeItems;
         public bool SeeWallItems;
         public bool SeeTraps;
+        
+        public bool HideShadow;
 
         //miscellaneous traits
         public StateCollection<CharState> CharStates;
@@ -2426,7 +2428,6 @@ namespace RogueEssence.Dungeon
                 if (idleAction != null)
                     idleAction.Override = IdleOverride;
             }
-
             charAnim.SetLocWithoutVisual(MemberTeam.ContainingMap.WrapLoc(charAnim.CharLoc));
             if (OccupiedwithAction())
             {
@@ -2449,6 +2450,7 @@ namespace RogueEssence.Dungeon
             CharAction newCharAction = new EmptyCharAction(charAnim);
             newCharAction.PickUpFrom(Appearance.ToCharID(), currentCharAction);
             Loc oldLoc = CharLoc;
+            HideShadow = charAnim.HideShadow;
             currentCharAction = newCharAction;
             updateLoc(oldLoc);
 
@@ -2561,6 +2563,7 @@ namespace RogueEssence.Dungeon
 
         public void DrawShadow(SpriteBatch spriteBatch, Loc offset, int terrainShadow)
         {
+            if (HideShadow) return;
             CharSheet sheet = GraphicsManager.GetChara(Appearance.ToCharID());
             int teamStatus = 2;
             //if (DataManager.Instance.Save != null || !DataManager.Instance.Save.CutsceneMode)
@@ -2583,7 +2586,6 @@ namespace RogueEssence.Dungeon
             int animFrame = (int)(GraphicsManager.TotalFrameTick / (ulong)FrameTick.FrameToTick(5) % 3);
             Loc shadowType = new Loc(animFrame, teamStatus + terrainShadow * 3);
             Loc shadowPoint = currentCharAction.GetActionPoint(sheet, ActionPointType.Shadow);
-
             GraphicsManager.Shadows.DrawTile(spriteBatch,
                 (shadowPoint - offset).ToVector2() - new Vector2(GraphicsManager.Shadows.TileWidth / 2, GraphicsManager.Shadows.TileHeight / 2),
                 shadowType.X, shadowType.Y);
