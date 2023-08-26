@@ -13,19 +13,37 @@ namespace RogueEssence.Ground
     public enum SelectionType
     {
         /// <summary>
-        /// apply to user
+        /// Apply to the team leader
         /// </summary>
         Self,
         /// <summary>
-        /// apply to other party members
+        /// Apply to other team members
         /// </summary>
         Others,
     }
     
     public abstract class GroundItemEvent : GameEvent
     {
+        /// <summary>
+        /// Whether the action is enabled through the item menu.
+        /// </summary>
+        public bool Enabled;
+        
+        /// <summary>
+        /// Whether the action is visible through the item menu.
+        /// </summary>
+        public bool Visible;
+        
+        /// <summary>
+        /// Defines the type of action such as "Eat", "Drink", etc.
+        /// </summary>
         public ItemData.UseType GroundUsageType;
+        
+        /// <summary>
+        /// Whether to target the team leader or choose which team member to target.
+        /// </summary>
         public SelectionType Selection;
+
         public abstract IEnumerator<YieldInstruction> Apply(GroundContext context);
     }
     
