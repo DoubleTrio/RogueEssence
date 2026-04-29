@@ -20,6 +20,8 @@ using ReactiveUI;
 using RogueEssence.Content;
 using RogueEssence.Data;
 using RogueEssence.Dev.Views;
+using RogueEssence.Dungeon;
+using RogueEssence.Menu;
 using RogueEssence.Script;
 
 
@@ -149,6 +151,7 @@ public class OpenEditorNode : NodeBase
 {
     public Type EditorType { get; }
 
+    public virtual void OnDoubleClicked() { }
     public OpenEditorNode(string title, Type? editorType, string? icon = null)
         : base(title, icon ?? "")
     {
@@ -166,6 +169,59 @@ public class OpenEditorNode : NodeBase
         return EditorType.GetHashCode();
     }
 }
+
+public class MapEditorNode : OpenEditorNode
+{
+    
+    public MapEditorNode(string title, Type editorType, string icon = null)
+        : base(title, editorType, icon)
+    {
+    }
+
+    public override void OnDoubleClicked()
+    {
+        lock (GameBase.lockObj)
+        {
+            Views.DevForm form = (Views.DevForm)DiagManager.Instance.DevEditor;
+            if (form.MapEditForm == null)
+            {
+                LuaEngine.Instance.BreakScripts();
+                MenuManager.Instance.ClearMenus();
+                if (ZoneManager.Instance.CurrentMap != null)
+                    GameManager.Instance.SceneOutcome = GameManager.Instance.MoveToEditor(false, ZoneManager.Instance.CurrentMap.AssetName);
+                else
+                    GameManager.Instance.SceneOutcome = GameManager.Instance.MoveToEditor(false, "");
+            }
+        }
+    }
+}
+
+public class GroundEditorNode : OpenEditorNode
+{
+    
+    public GroundEditorNode(string title, Type editorType, string icon = null)
+        : base(title, editorType, icon)
+    {
+    }
+
+    public override void OnDoubleClicked()
+    {
+        lock (GameBase.lockObj)
+        {
+            Views.DevForm form = (Views.DevForm)DiagManager.Instance.DevEditor;
+            if (form.GroundEditForm == null)
+            {
+                LuaEngine.Instance.BreakScripts();
+                MenuManager.Instance.ClearMenus();
+                if (ZoneManager.Instance.CurrentGround != null)
+                    GameManager.Instance.SceneOutcome = GameManager.Instance.MoveToEditor(true, ZoneManager.Instance.CurrentGround.AssetName);
+                else
+                    GameManager.Instance.SceneOutcome = GameManager.Instance.MoveToEditor(true, "");
+            }
+        }
+    }
+}
+
 
 
 // TODO: Remove

@@ -28,6 +28,14 @@ namespace RogueEssence.Dev
             where TEditor : EditorPageViewModel
             => Create<OpenEditorNode>(title, typeof(TEditor), icon);
         
+        public MapEditorNode CreateMapEditorNode<TEditor>(string title, string? icon = null)
+            where TEditor : EditorPageViewModel
+            => Create<MapEditorNode>(title, typeof(TEditor), icon);
+        
+        public GroundEditorNode CreateGroundEditorNode<TEditor>(string title, string? icon = null)
+            where TEditor : EditorPageViewModel
+            => Create<GroundEditorNode>(title, typeof(TEditor), icon);
+        
         public OpenEditorNodeWithParams CreateOpenEditorNodeWithParams<TEditor>(
             string title,
             object[] extraParams,

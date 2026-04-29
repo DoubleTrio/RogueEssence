@@ -241,7 +241,7 @@ public class DevFormViewModel : ViewModelBase
 
     public void AddTopLevelPage(EditorPageViewModel page)
     {
-        Console.WriteLine($"Adding top level page {page}");
+        Console.WriteLine($"Trying to navigate to top level page {page}");
         var navigated = TryNavigateToExistingPage(page);
         if (navigated) return;
 
@@ -250,10 +250,10 @@ public class DevFormViewModel : ViewModelBase
             TemporaryTab = page;
             return;
         }
-
+        
         // Only load the data once it is confirmed that the tab doesn't already exist
         page.LoadData();
-
+        
         Pages.Add(page);
         var node = _nodeFactory.CreatePageNode(page, null);
         TopLevelPages.Add(node);
@@ -420,24 +420,11 @@ public class DevFormViewModel : ViewModelBase
         _dialogService = dialogService;
 
         InitializeTabEvents();
-
+        
         this.WhenAnyValue(x => x.ActivePage)
             .Where(activePage => activePage != null)
             .Subscribe(_ => TemporaryTab = null);
-
-        Pages = new ObservableCollection<EditorPageViewModel>();
-        TopLevelPages = new ObservableCollection<PageNode>();
-        _pageToNodeMap = new Dictionary<EditorPageViewModel, PageNode>();
-
-        // TODO: move this own view
-        ClearFilterCommand = ReactiveCommand.Create(() => { Filter = string.Empty; });
-
-        OpenPreferencesWindow = ReactiveCommand.CreateFromTask(async () =>
-        {
-            await _dialogService.ShowDialogAsync<PreferencesWindowViewModel, bool>(
-                PreferencesWindowViewModel.Instance, "Preferences");
-        });
-
+        
         this.WhenAnyValue(x => x.ActivePage)
             .Buffer(2, 1)
             .Subscribe(pair =>
@@ -448,6 +435,21 @@ public class DevFormViewModel : ViewModelBase
 
         this.WhenAnyValue(x => x.Filter).Throttle(TimeSpan.FromMilliseconds(300)).Subscribe(ApplyFilter);
 
+
+        Pages = new ObservableCollection<EditorPageViewModel>();
+        TopLevelPages = new ObservableCollection<PageNode>();
+        _pageToNodeMap = new Dictionary<EditorPageViewModel, PageNode>();
+
+        ClearFilterCommand = ReactiveCommand.Create(() => { Filter = string.Empty; });
+        
+        
+
+        OpenPreferencesWindow = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _dialogService.ShowDialogAsync<PreferencesWindowViewModel, bool>(
+                PreferencesWindowViewModel.Instance, "Preferences");
+        });
+        
         NodeSource = new HierarchicalTreeDataGridSource<NodeBase>(Nodes)
         {
             Columns =
@@ -493,12 +495,12 @@ public class DevFormViewModel : ViewModelBase
         var root = _nodeFactory.CreateOpenEditorNode<DevEditPageViewModel>(rootStr, "Icons.ScrollFill");
 
 
-        // root.SubNodes.Add(
-        // _nodeFactory.CreateOpenEditorNode("Dev Control",  typeof(DevControlViewModel), "Icons.GameControllerFill"));
         root.SubNodes.Add(
-            _nodeFactory.CreateOpenEditorNode<ZoneEditorPageViewModel>("Zone Editor", "Icons.StairsFill"));
-        // root.SubNodes.Add(
-        // _nodeFactory.CreateOpenEditorNode("Ground Editor", typeof(GroundEditorPageViewModel), "Icons.MapTrifoldFill"));
+            _nodeFactory.CreateOpenEditorNode<DevControlViewModel>("Dev Control", "Icons.GameControllerFill"));
+        root.SubNodes.Add(
+            _nodeFactory.CreateMapEditorNode<MapEditorPageViewModel>("Map Editor", "Icons.StairsFill"));
+        root.SubNodes.Add(
+            _nodeFactory.CreateGroundEditorNode<GroundEditorPageViewModel>("Ground Editor", "Icons.MapTrifoldFill"));
         // root.SubNodes.Add(_nodeFactory.CreateOpenEditorNode("Testing", "Icons.BedFill", "RandomInfo"));
         // root.SubNodes.Add(_nodeFactory.CreateOpenEditorNode("Tab Test", "Icons.AirplaneFill", "SpritePage"));
 
@@ -687,7 +689,7 @@ public class DevFormViewModel : ViewModelBase
 
     private void CreateDataNode(NodeBase parent)
     {
-        var dataNode = _nodeFactory.CreateOpenEditorNode<ZoneEditorPageViewModel>("Datazz", "Icons.FloppyDiskFill");
+        var dataNode = _nodeFactory.CreateOpenEditorNode<MapEditorPageViewModel>("Datazz", "Icons.FloppyDiskFill");
         foreach (var type in Enum.GetValues<DataManager.DataType>())
         {
             if (type is DataManager.DataType.All or DataManager.DataType.None)
@@ -943,8 +945,7 @@ public class DevFormViewModel : ViewModelBase
     public void AddPageFromTreeNode(OpenEditorNode node)
     {
         var editor = _pageFactory.CreatePage(node.EditorType, node);
-
-        Console.WriteLine("EDitpr" + editor);
+        
         if (editor != null)
         {
             editor.SetPageTitleFromNode(node);

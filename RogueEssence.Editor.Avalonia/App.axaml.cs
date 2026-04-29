@@ -30,6 +30,9 @@ namespace RogueEssence.Dev
 
        
             AddDevTabViewModels(collection);
+            AddGroundTabViewModels(collection);
+            AddMapTabViewModels(collection);
+
             
             collection.AddTransient<TabSwitcherViewModel>(sp =>
             {
@@ -44,6 +47,8 @@ namespace RogueEssence.Dev
             collection.AddTransient<DataRootNode>();
             collection.AddTransient<DataItemNode>();
             collection.AddTransient<OpenEditorNode>();
+            collection.AddTransient<GroundEditorNode>();
+            collection.AddTransient<MapEditorNode>();
             collection.AddTransient<PageNode>();
 
             // TODO: remove?
@@ -61,9 +66,11 @@ namespace RogueEssence.Dev
             collection.AddSingleton<IDialogService, DialogService>();
 
             collection.AddTransient<DevControlViewModel>();
-            collection.AddTransient<ZoneEditorPageViewModel>();
+            collection.AddTransient<MapEditorPageViewModel>();
             collection.AddTransient<GroundEditorPageViewModel>();
+            
             collection.AddTransient<RandomInfoPageViewModel>();
+            
             collection.AddTransient<SpritePageViewModel>();
             collection.AddTransient<ModInfoEditorViewModel>();
             collection.AddTransient<DevEditPageViewModel>();
@@ -84,12 +91,39 @@ namespace RogueEssence.Dev
             services.AddSingleton<DevTabConstantsViewModel>();
         }
 
+        
+        private static void AddGroundTabViewModels(this IServiceCollection services)
+        {
+            // services.AddTransient<GroundEditorPageView>();
+            services.AddTransient<GroundTabTexturesViewModel>();
+            services.AddTransient<GroundTabDecorationsViewModel>();
+            services.AddTransient<GroundTabWallsViewModel>();
+            services.AddTransient<GroundTabEntitiesViewModel>();
+            services.AddTransient<GroundTabPropertiesViewModel>();
+            services.AddTransient<GroundTabStringsViewModel>();
+            services.AddTransient<GroundTabScriptViewModel>();
+        }
+        
+        private static void AddMapTabViewModels(this IServiceCollection services)
+        {
+            // services.AddTransient<MapEditorPageViewModel>();
+            services.AddTransient<MapTabTexturesViewModel>();
+            services.AddTransient<MapTabDecorationsViewModel>();
+            services.AddTransient<MapTabTerrainViewModel>();
+            services.AddTransient<MapTabTilesViewModel>();
+            services.AddTransient<MapTabItemsViewModel>();
+            services.AddTransient<MapTabEntitiesViewModel>();
+            services.AddTransient<MapTabEntrancesViewModel>();
+            services.AddTransient<MapTabSpawnsViewModel>();
+            services.AddTransient<MapTabEffectsViewModel>();
+            services.AddTransient<MapTabPropertiesViewModel>();
+        }
         public static void RegisterPages(this IServiceProvider provider)
         {
             var pageFactory = provider.GetRequiredService<PageFactory>();
 
             pageFactory.Register<DevControlViewModel>();
-            pageFactory.Register<ZoneEditorPageViewModel>();
+            pageFactory.Register<MapEditorPageViewModel>();
             pageFactory.Register<ReflectedDataPageViewModel>();
             pageFactory.Register<GroundEditorPageViewModel>();
             pageFactory.Register<RandomInfoPageViewModel>();

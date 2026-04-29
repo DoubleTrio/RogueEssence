@@ -36,10 +36,7 @@ namespace RogueEssence.Dev.Views
         {
             DevForm.ExecuteOrInvoke(() => ((GroundEditViewModel)DataContext).ProcessInput(input));
         }
-
-
-
-
+        
         public void Window_Loaded(object sender, EventArgs e)
         {
             Active = true;

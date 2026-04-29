@@ -121,16 +121,7 @@
             </TabItem>
             <TabItem Header="Script">
                 <views:DevTabScript DataContext="{Binding Script}"/>
-              
-                <!-- <Grid RowDefinitions="34, 26, Auto, 40" ColumnDefinitions="*, *" ColumnSpacing="8" RowSpacing="8"> -->
-                    <!-- -->
-                    <!--     <Button Classes="flat" Name="btnReloadScripts"  Grid.Row="0" Grid.Column="0" >Reload Scripts</Button> -->
-                    <!--     <Button  Classes="flat" Name="btnTextTest"  Grid.Row="0" Grid.Column="1" >Text Test</Button> -->
-                    <!--     <TextBlock VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0">Lua Console:</TextBlock> -->
-                    <!--     <TextBox Name="txtScriptOutput" Height="300"  IsReadOnly="True" Grid.Row="2" Grid.ColumnSpan="2"/> -->
-                    <!--     <TextBox Name="txtScriptInput" Grid.Row="3" Grid.ColumnSpan="2"></TextBox> -->
-                    <!-- </Grid> -->
-                    <!-- -->
+
             </TabItem>
 
         </TabControl>

@@ -16,6 +16,15 @@ namespace RogueEssence.Dev
         // Used for closing tabs when a data entry is deleted
         public event Action<string, DataManager.DataType>? CloseTabsForEntry;
 
+        public event Action<EditorPageViewModel> OnTabCreated;
+        public event Action<OpenEditorNode> AttemptToOpenFromNode;
+        
+        public void OnAttemptToOpenFromNode(OpenEditorNode node)
+        {
+            AttemptToOpenFromNode?.Invoke(node);
+        }
+        
+        
         public void RequestCloseTabsForEntry(string key, DataManager.DataType dataType)
         {
             CloseTabsForEntry?.Invoke(key, dataType);

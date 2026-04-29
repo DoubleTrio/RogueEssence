@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.ReactiveUI;
 
@@ -12,6 +14,16 @@ namespace RogueEssence.Dev
         // yet and stuff might break.
         public static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                File.WriteAllText("crash.log", e.ExceptionObject.ToString());
+            };
+
+            TaskScheduler.UnobservedTaskException += (sender, e) =>
+            {
+                File.WriteAllText("crash_task.log", e.Exception.ToString());
+                e.SetObserved();
+            };
             Native.OS.SetupDataDir();
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }

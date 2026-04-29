@@ -215,8 +215,17 @@ public partial class DevForm : ChromelessWindow, IRootEditor
             MapEditForm = new MapEditForm();
             ViewModels.MapEditViewModel vm = new ViewModels.MapEditViewModel();
             MapEditForm.DataContext = vm;
+                        
             vm.LoadFromCurrentMap();
             MapEditForm.Show();
+
+            // MapEditForm = new MapEditForm();
+            // Console.WriteLine("OpenMap");
+            var data = DataContext as DevFormViewModel;
+            var page = data.Pages
+                .OfType<MapEditorPageViewModel>().First();
+            page.LoadFromCurrentMap();
+
         }
 
         public void groundEditorClosed(object sender, EventArgs e)
@@ -634,10 +643,10 @@ public partial class DevForm : ChromelessWindow, IRootEditor
             var selectedItem = (OpenEditorNode)treeView.RowSelection.SelectedItem;
             if (selectedItem != null)
             {
-                Console.WriteLine(selectedItem.ToString());
+                selectedItem.OnDoubleClicked();
                 vm.AddPageFromTreeNode(selectedItem);
+           
             }
-
         }
     }
     
