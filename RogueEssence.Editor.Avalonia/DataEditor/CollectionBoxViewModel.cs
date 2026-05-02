@@ -13,6 +13,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Avalonia.Data.Converters;
 using Avalonia.Input;
+using RogueEssence.Dev.Services;
 using RogueEssence.Dev.Views;
 
 namespace RogueEssence.Dev.ViewModels
@@ -75,7 +76,7 @@ namespace RogueEssence.Dev.ViewModels
         }
 
         public StringConv StringConv;
-        private Window parent;
+        private IDialogService _dialogService;
 
         public delegate void EditElementOp(int index, object element);
 
@@ -93,10 +94,10 @@ namespace RogueEssence.Dev.ViewModels
         public ReactiveCommand<Unit, Unit> MoveDownCommand { get; }
         
         
-        public CollectionBoxViewModel(Window parent, StringConv conv)
+        public CollectionBoxViewModel(IDialogService dialogService, StringConv conv)
         {
             StringConv = conv;
-            this.parent = parent;
+            this._dialogService = dialogService;
             Collection = new ObservableCollection<ListElement>();
 
             var collectionCount = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
@@ -118,7 +119,6 @@ namespace RogueEssence.Dev.ViewModels
                     collectionCount,
                     (index, count) => index >= 0 && index < count - 1));
             
-            // Force UI refresh when CanExecute changes
             MoveDownCommand.CanExecute.Subscribe(canExecute => 
             {
                 Console.WriteLine($"MoveDown button should be {(canExecute ? "enabled" : "disabled")}");
@@ -208,13 +208,13 @@ namespace RogueEssence.Dev.ViewModels
             {
                 if (ConfirmDelete)
                 {
-                    MessageBox.MessageBoxResult result = await MessageBox.Show(
-                        parent,
+                    MessageBoxWindowView.MessageBoxResult result = await MessageBoxWindowView.Show(
+                        _dialogService,
                         "Are you sure you want to delete this item:\n" + Collection[SelectedIndex].DisplayValue,
                         "Confirm Delete",
-                        MessageBox.MessageBoxButtons.YesNo);
+                        MessageBoxWindowView.MessageBoxButtons.YesNo);
 
-                    if (result == MessageBox.MessageBoxResult.No)
+                    if (result == MessageBoxWindowView.MessageBoxResult.No)
                         return;
                 }
 

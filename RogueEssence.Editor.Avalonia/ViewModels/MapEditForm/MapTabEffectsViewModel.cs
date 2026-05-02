@@ -9,15 +9,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using RogueEssence.Dev.Services;
 
 namespace RogueEssence.Dev.ViewModels
 {
     public class MapTabEffectsViewModel : ViewModelBase
     {
-        public MapTabEffectsViewModel()
+        public MapTabEffectsViewModel(IDialogService dialogService)
         {
             DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-            Statuses = new CollectionBoxViewModel(form.MapEditForm, new StringConv(typeof(MapStatus), new object[0]));
+            Statuses = new CollectionBoxViewModel(dialogService, new StringConv(typeof(MapStatus), new object[0]));
             Statuses.OnMemberChanged += Statuses_Changed;
             Statuses.OnEditItem += Statuses_EditItem;
 
@@ -55,8 +56,9 @@ namespace RogueEssence.Dev.ViewModels
             };
 
             DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-            form.MapEditForm.RegisterChild(frmData);
-            frmData.Show();
+            // TODO NEW EDITOR: RESOLVE THIS
+            // form.MapEditForm.RegisterChild(frmData);
+            // frmData.Show();
         }
 
         public void Statuses_Changed()
@@ -106,9 +108,9 @@ namespace RogueEssence.Dev.ViewModels
                     return true;
                 }
             };
-
-            form.MapEditForm.RegisterChild(frmData);
-            frmData.Show();
+            // TODO NEW EDITOR: RESOLVE THIS
+            // form.MapEditForm.RegisterChild(frmData);
+            // frmData.Show();
         }
 
         public void Events_EditItem(int index, object element, bool advancedEdit, CollectionBoxViewModel.EditElementOp op)
@@ -128,8 +130,9 @@ namespace RogueEssence.Dev.ViewModels
             };
 
             DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-            form.MapEditForm.RegisterChild(frmData);
-            frmData.Show();
+            // form.MapEditForm.RegisterChild(frmData);
+            // frmData.Show();
+            // TODO NEW EDITOR: RESOLVE THIS
         }
 
         public void LoadMapEffects()

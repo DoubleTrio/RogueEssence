@@ -31,7 +31,8 @@ namespace RogueEssence.Dev.Views
         
         public void ProcessInput(InputManager input)
         {
-            DevForm.ExecuteOrInvoke(() => ((MapEditViewModel)DataContext).ProcessInput(input));
+            // TODO NEW EDITOR: RESOLVE THIS
+            // DevForm.ExecuteOrInvoke(() => ((MapEditViewModel)DataContext).ProcessInput(input));
         }
         
         public void Window_Loaded(object sender, EventArgs e)

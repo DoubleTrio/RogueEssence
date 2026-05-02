@@ -29,9 +29,11 @@ namespace RogueEssence.Dev.ViewModels
             ChosenModType = (int)header.ModType;
 
             DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-            Relationships = new CollectionBoxViewModel(form, new StringConv(typeof(RelatedMod), new object[0]));
-            Relationships.OnEditItem += Relationships_EditItem;
-            Relationships.LoadFromList(header.Relationships);
+            
+            // TODO NEW EDITOR: RESOLVE THIS
+            // Relationships = new CollectionBoxViewModel(form, new StringConv(typeof(RelatedMod), new object[0]));
+            // Relationships.OnEditItem += Relationships_EditItem;
+            // Relationships.LoadFromList(header.Relationships);
         }
 
         private string name;

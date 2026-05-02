@@ -79,13 +79,15 @@ namespace RogueEssence.Dev.ViewModels
 
         public async Task EditTeam()
         {
-            TeamWindow window = new TeamWindow();
-            TeamViewModel vm = new TeamViewModel(chosenTeam);
-            window.DataContext = vm;
-
-            DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-
-            bool result = await window.ShowDialog<bool>(form.MapEditForm);
+            
+            // TODO NEW EDITOR: RESOLVE THIS
+            // TeamWindow window = new TeamWindow();
+            // TeamViewModel vm = new TeamViewModel(chosenTeam);
+            // window.DataContext = vm;
+            //
+            // DevForm form = (DevForm)DiagManager.Instance.DevEditor;
+            //
+            // bool result = await window.ShowDialog<bool>(form.MapEditForm);
 
             //lock (GameBase.lockObj)
             //{

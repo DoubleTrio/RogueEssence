@@ -1,13 +1,27 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
-namespace RogueEssence.Editor.Avalonia.Views.New.DialogBoxes;
-
-public partial class MapResizeWindowView : UserControl
+namespace RogueEssence.Dev.Views
 {
-    public MapResizeWindowView()
+    public partial class MapResizeWindowView : ChromelessWindow
     {
-        InitializeComponent();
+        public MapResizeWindowView()
+        {
+            this.InitializeComponent();
+
+        }
+        
+        public void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(true);
+        }
+
+
+        public void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(false);
+        }
     }
 }

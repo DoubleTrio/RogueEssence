@@ -39,26 +39,26 @@ namespace RogueEssence.Dev.ViewModels
                 MapLayerWindow window = new MapLayerWindow();
                 window.DataContext = vm;
 
-                result = await window.ShowDialog<bool>(form.MapEditForm);
+                // result = await window.ShowDialog<bool>(form.MapEditForm);
             }
 
             lock (GameBase.lockObj)
             {
-                if (result)
-                {
-                    MapLayer newLayer = new MapLayer(vm.Name);
-                    MapLayer oldLayer = Layers[ChosenLayer];
-                    newLayer.Layer = vm.Front ? DrawLayer.Top : (vm.Back ? DrawLayer.Under : DrawLayer.Bottom);
-                    newLayer.Visible = oldLayer.Visible;
-                    newLayer.Tiles = oldLayer.Tiles;
-
-                    if (groundMode)
-                        edits.Apply(new GroundTextureStateUndo(ChosenLayer));
-                    else
-                        edits.Apply(new MapTextureStateUndo(ChosenLayer));
-
-                    SetLayer(ChosenLayer, newLayer);
-                }
+                // if (result)
+                // {
+                //     MapLayer newLayer = new MapLayer(vm.Name);
+                //     MapLayer oldLayer = Layers[ChosenLayer];
+                //     newLayer.Layer = vm.Front ? DrawLayer.Top : (vm.Back ? DrawLayer.Under : DrawLayer.Bottom);
+                //     newLayer.Visible = oldLayer.Visible;
+                //     newLayer.Tiles = oldLayer.Tiles;
+                //
+                //     if (groundMode)
+                //         edits.Apply(new GroundTextureStateUndo(ChosenLayer));
+                //     else
+                //         edits.Apply(new MapTextureStateUndo(ChosenLayer));
+                //
+                //     SetLayer(ChosenLayer, newLayer);
+                // }
             }
         }
 

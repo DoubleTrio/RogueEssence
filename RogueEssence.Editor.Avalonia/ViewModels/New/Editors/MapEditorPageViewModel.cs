@@ -131,9 +131,9 @@ public class MapEditorPageViewModel : EditorPageViewModel
                 }
 
                 if (!legalPath)
-                    await MessageBox.Show(form.MapEditForm,
+                    await MessageBoxWindowView.Show(DialogService,
                         String.Format("Map can only be loaded from:\n{0}\nOr one of its parents.",
-                            PathMod.ModPath(DataManager.MAP_PATH)), "Error", MessageBox.MessageBoxButtons.Ok);
+                            PathMod.ModPath(DataManager.MAP_PATH)), "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
                 else
                 {
                     lock (GameBase.lockObj)
@@ -147,41 +147,83 @@ public class MapEditorPageViewModel : EditorPageViewModel
     public async void mnuExportAsGround_Click()
     {
         string mapDir = Path.GetFullPath(PathMod.ModPath(DataManager.GROUND_PATH));
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Directory = mapDir;
-
-        FileDialogFilter filter = new FileDialogFilter();
-        filter.Name = "Ground Files";
-        filter.Extensions.Add(DataManager.GROUND_EXT.Substring(1));
-        saveFileDialog.Filters.Add(filter);
-
-        DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-
-        string result = await saveFileDialog.ShowAsync(form.MapEditForm);
-
-        if (!String.IsNullOrEmpty(result))
+    
+        string? result = await DialogService.TryGetSaveFileAsync(new FilePickerSaveOptions
         {
-            string reqDir = PathMod.HardMod(DataManager.GROUND_PATH);
-            if (!comparePaths(reqDir, Path.GetDirectoryName(result)))
-                await MessageBox.Show(form.MapEditForm, String.Format("Map can only be saved to:\n{0}", reqDir),
-                    "Error", MessageBox.MessageBoxButtons.Ok);
-            else if (Path.GetFileName(result).Contains(" "))
-                await MessageBox.Show(form.MapEditForm,
-                    String.Format("Save file should not contain white space:\n{0}", Path.GetFileName(result)), "Error",
-                    MessageBox.MessageBoxButtons.Ok);
-            else
+            Title = "Export as Ground",
+            FileTypeChoices = new[]
             {
-                lock (GameBase.lockObj)
+                new FilePickerFileType("Ground Files")
                 {
-                    //Schedule saving the map
-                    ExportToGround(ZoneManager.Instance.CurrentMap, result);
+                    Patterns = new[] { $"*{DataManager.GROUND_EXT}" }
                 }
-
-                await MessageBox.Show(form.MapEditForm, String.Format("Textures have been saved to Ground!"), "Success",
-                    MessageBox.MessageBoxButtons.Ok);
             }
+        }, mapDir);
+
+        if (string.IsNullOrEmpty(result))
+            return;
+
+        string reqDir = PathMod.HardMod(DataManager.GROUND_PATH);
+        if (!comparePaths(reqDir, Path.GetDirectoryName(result)))
+            await MessageBoxWindowView.Show(DialogService,
+                String.Format("Map can only be saved to:\n{0}", reqDir),
+                "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
+        else if (Path.GetFileName(result).Contains(" "))
+            await MessageBoxWindowView.Show(DialogService,
+                String.Format("Save file should not contain white space:\n{0}", Path.GetFileName(result)),
+                "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
+        else
+        {
+            lock (GameBase.lockObj)
+            {
+                //Schedule saving the map
+                ExportToGround(ZoneManager.Instance.CurrentMap, result);
+            }
+
+            await MessageBoxWindowView.Show(DialogService,
+                "Textures have been saved to Ground!",
+                "Success", MessageBoxWindowView.MessageBoxButtons.Ok);
         }
     }
+    
+    // public async void mnuExportAsGround_Click()
+    // {
+    //     string mapDir = Path.GetFullPath(PathMod.ModPath(DataManager.GROUND_PATH));
+    //     SaveFileDialog saveFileDialog = new SaveFileDialog();
+    //     saveFileDialog.Directory = mapDir;
+    //
+    //     FileDialogFilter filter = new FileDialogFilter();
+    //     filter.Name = "Ground Files";
+    //     filter.Extensions.Add(DataManager.GROUND_EXT.Substring(1));
+    //     saveFileDialog.Filters.Add(filter);
+    //
+    //     DevForm form = (DevForm)DiagManager.Instance.DevEditor;
+    //
+    //     string result = await saveFileDialog.ShowAsync(form.MapEditForm);
+    //
+    //     if (!String.IsNullOrEmpty(result))
+    //     {
+    //         string reqDir = PathMod.HardMod(DataManager.GROUND_PATH);
+    //         if (!comparePaths(reqDir, Path.GetDirectoryName(result)))
+    //             await MessageBox.Show(form.MapEditForm, String.Format("Map can only be saved to:\n{0}", reqDir),
+    //                 "Error", MessageBox.MessageBoxButtons.Ok);
+    //         else if (Path.GetFileName(result).Contains(" "))
+    //             await MessageBox.Show(form.MapEditForm,
+    //                 String.Format("Save file should not contain white space:\n{0}", Path.GetFileName(result)), "Error",
+    //                 MessageBox.MessageBoxButtons.Ok);
+    //         else
+    //         {
+    //             lock (GameBase.lockObj)
+    //             {
+    //                 //Schedule saving the map
+    //                 ExportToGround(ZoneManager.Instance.CurrentMap, result);
+    //             }
+    //
+    //             await MessageBox.Show(form.MapEditForm, String.Format("Textures have been saved to Ground!"), "Success",
+    //                 MessageBox.MessageBoxButtons.Ok);
+    //         }
+    //     }
+    // }
 
     public async Task<bool> mnuSave_Click()
     {
@@ -205,28 +247,30 @@ public class MapEditorPageViewModel : EditorPageViewModel
     public async Task<bool> mnuSaveAs_Click()
     {
         string mapDir = Path.GetFullPath(PathMod.ModPath(DataManager.MAP_PATH));
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Directory = mapDir;
 
-        FileDialogFilter filter = new FileDialogFilter();
-        filter.Name = "Map Files";
-        filter.Extensions.Add(DataManager.MAP_EXT.Substring(1));
-        saveFileDialog.Filters.Add(filter);
-
-        DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-
-        string result = await saveFileDialog.ShowAsync(form.MapEditForm);
+        string? result = await DialogService.TryGetSaveFileAsync(new FilePickerSaveOptions
+        {
+            Title = "Save Map",
+            FileTypeChoices = new[]
+            {
+                new FilePickerFileType("Map Files")
+                {
+                    Patterns = new[] { $"*{DataManager.MAP_EXT}" }
+                }
+            }
+        }, mapDir);
 
         if (!String.IsNullOrEmpty(result))
         {
             string reqDir = PathMod.HardMod(DataManager.MAP_PATH);
             if (!comparePaths(reqDir, Path.GetDirectoryName(result)))
-                await MessageBox.Show(form.MapEditForm, String.Format("Map can only be saved to:\n{0}", reqDir),
-                    "Error", MessageBox.MessageBoxButtons.Ok);
+                await MessageBoxWindowView.Show(DialogService,
+                    string.Format("Map can only be saved to:\n{0}", reqDir),
+                    "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
             else if (Path.GetFileName(result).Contains(" "))
-                await MessageBox.Show(form.MapEditForm,
-                    String.Format("Save file should not contain white space:\n{0}", Path.GetFileName(result)), "Error",
-                    MessageBox.MessageBoxButtons.Ok);
+                await MessageBoxWindowView.Show(DialogService,
+                    string.Format("Save file should not contain white space:\n{0}", Path.GetFileName(result)),
+                    "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
             else
             {
                 lock (GameBase.lockObj)
@@ -265,15 +309,15 @@ public class MapEditorPageViewModel : EditorPageViewModel
     {
         string mapDir = Path.GetFullPath(PathMod.ModPath(DataManager.MAP_PATH));
         DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-        IStorageFolder directory = await form.MapEditForm.StorageProvider.TryGetFolderFromPathAsync(mapDir);
-
-        await Dispatcher.UIThread.InvokeAsync(async () =>
+        
+ 
+  
+        Dispatcher.UIThread.InvokeAsync(async () =>
         {
-            IReadOnlyList<IStorageFile> results = await form.MapEditForm.StorageProvider.OpenFilePickerAsync(
+            var file = await DialogService.ShowFilePickerAsync(
                 new FilePickerOpenOptions
                 {
                     Title = "Open .png File",
-                    SuggestedStartLocation = directory,
                     AllowMultiple = false,
                     FileTypeFilter =
                     [
@@ -282,12 +326,13 @@ public class MapEditorPageViewModel : EditorPageViewModel
                             Patterns = ["*.PNG"]
                         }
                     ]
-                });
-
-            if (results.Count > 0)
+                }, 
+                mapDir
+            );
+     
+            if (!string.IsNullOrEmpty(file))
             {
-                IStorageFile result = results.First();
-                DoImportPng(result.Path.LocalPath);
+                DoImportPng(file);
             }
         });
     }
@@ -304,8 +349,8 @@ public class MapEditorPageViewModel : EditorPageViewModel
         DevForm form = (DevForm)DiagManager.Instance.DevEditor;
 
         if (Textures.TileBrowser.CurrentTileset == "")
-            await MessageBox.Show(form.MapEditForm, String.Format("No tileset to import!"), "Error",
-                MessageBox.MessageBoxButtons.Ok);
+            await MessageBoxWindowView.Show(DialogService, String.Format("No tileset to import!"), "Error",
+                MessageBoxWindowView.MessageBoxButtons.Ok);
         else
         {
             lock (GameBase.lockObj)
@@ -316,14 +361,9 @@ public class MapEditorPageViewModel : EditorPageViewModel
 
     public async void mnuReSize_Click()
     {
-        MapResizeWindow window = new MapResizeWindow();
-        MapResizeViewModel viewModel = new MapResizeViewModel(ZoneManager.Instance.CurrentMap.Width,
+        MapResizeWindowViewModel viewModel = new MapResizeWindowViewModel(ZoneManager.Instance.CurrentMap.Width,
             ZoneManager.Instance.CurrentMap.Height);
-        window.DataContext = viewModel;
-
-        DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-
-        bool result = await window.ShowDialog<bool>(form.MapEditForm);
+        bool result = await DialogService.ShowDialogAsync<MapResizeWindowViewModel, bool>(viewModel);
 
         lock (GameBase.lockObj)
         {

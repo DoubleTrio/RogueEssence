@@ -8,13 +8,14 @@ using RogueEssence.Dungeon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using RogueEssence.Dev.Services;
 
 namespace RogueEssence.Dev.ViewModels
 {
     public class MapTabTilesViewModel : ViewModelBase
     {
 
-        public MapTabTilesViewModel()
+        public MapTabTilesViewModel(IDialogService dialogService)
         {
             TileTypes = new ObservableCollection<string>();
             Dictionary<string, string> tile_names = DataManager.Instance.DataIndices[DataManager.DataType.Tile].GetLocalStringArray(true);
@@ -33,7 +34,7 @@ namespace RogueEssence.Dev.ViewModels
 
 
             DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-            TileStates = new CollectionBoxViewModel(form.MapEditForm, new StringConv(typeof(TileState), new object[0]));
+            TileStates = new CollectionBoxViewModel(dialogService, new StringConv(typeof(TileState), new object[0]));
             TileStates.OnEditItem += TileStates_EditItem;
         }
 
@@ -124,8 +125,9 @@ namespace RogueEssence.Dev.ViewModels
                 }
             };
 
-            form.MapEditForm.RegisterChild(frmData);
-            frmData.Show();
+            // TODO NEW EDITOR: RESOLVE THIS 
+            // form.MapEditForm.RegisterChild(frmData);
+            // frmData.Show();
         }
 
         public void ProcessInput(InputManager input)

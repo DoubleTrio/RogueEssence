@@ -863,7 +863,7 @@ public class ModRootNode : ItemRootNode
     public override async Task AddItem()
     {
         ModHeader header = new ModHeader("", "", "", "", "", Guid.NewGuid(), new Version(), new Version(), PathMod.ModType.Mod, new RelatedMod[0] { });
-        var vm = new ModConfigWindowViewModel(header);
+        var vm = new ModConfigWindowViewModel(_dialogService, header);
         bool result = await _dialogService.ShowDialogAsync<ModConfigWindowViewModel, bool>(vm, "Mod Config");
         
         if (!result)

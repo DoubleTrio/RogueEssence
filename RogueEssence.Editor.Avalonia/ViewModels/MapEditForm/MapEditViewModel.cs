@@ -28,17 +28,17 @@ namespace RogueEssence.Dev.ViewModels
     {
         public MapEditViewModel()
         {
-            Textures = new MapTabTexturesViewModel();
-            Decorations = new MapTabDecorationsViewModel();
-            Terrain = new MapTabTerrainViewModel();
-            Tiles = new MapTabTilesViewModel();
-            Items = new MapTabItemsViewModel();
-            Entities = new MapTabEntitiesViewModel();
-            Entrances = new MapTabEntrancesViewModel();
-            Spawns = new MapTabSpawnsViewModel();
-            Effects = new MapTabEffectsViewModel();
-            Properties = new MapTabPropertiesViewModel();
-            CurrentFile = "";
+            // Textures = new MapTabTexturesViewModel();
+            // Decorations = new MapTabDecorationsViewModel();
+            // Terrain = new MapTabTerrainViewModel();
+            // Tiles = new MapTabTilesViewModel();
+            // Items = new MapTabItemsViewModel();
+            // Entities = new MapTabEntitiesViewModel();
+            // Entrances = new MapTabEntrancesViewModel();
+            // Spawns = new MapTabSpawnsViewModel();
+            // Effects = new MapTabEffectsViewModel();
+            // Properties = new MapTabPropertiesViewModel();
+            // CurrentFile = "";
         }
 
         public MapTabTexturesViewModel Textures { get; set; }
@@ -111,7 +111,7 @@ namespace RogueEssence.Dev.ViewModels
                             legalPath = true;
                     }
                     if (!legalPath)
-                        await MessageBox.Show(form.MapEditForm, String.Format("Map can only be loaded from:\n{0}\nOr one of its parents.", PathMod.ModPath(DataManager.MAP_PATH)), "Error", MessageBox.MessageBoxButtons.Ok);
+                        await MessageBoxWindowView.Show(form.MapEditForm, String.Format("Map can only be loaded from:\n{0}\nOr one of its parents.", PathMod.ModPath(DataManager.MAP_PATH)), "Error", MessageBox.MessageBoxButtons.Ok);
                     else
                     {
                         lock (GameBase.lockObj)

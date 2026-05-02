@@ -8,6 +8,7 @@ using RogueEssence.Dungeon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using RogueEssence.Dev.Services;
 using RogueEssence.LevelGen;
 
 namespace RogueEssence.Dev.ViewModels
@@ -16,7 +17,7 @@ namespace RogueEssence.Dev.ViewModels
     {
         public delegate void EntityOp(Character ent);
 
-        public MapTabEntitiesViewModel()
+        public MapTabEntitiesViewModel(IDialogService dialogService)
         {
             //Teams = new TeamBoxViewModel(DiagManager.Instance.DevEditor.MapEditor.Edits);
 
@@ -101,10 +102,10 @@ namespace RogueEssence.Dev.ViewModels
             speciesChanged();
 
             DevForm form = (DevForm)DiagManager.Instance.DevEditor;
-            ActionEvents = new CollectionBoxViewModel(form.MapEditForm, new StringConv(typeof(BattleEvent), new object[0]));
+            ActionEvents = new CollectionBoxViewModel(dialogService, new StringConv(typeof(BattleEvent), new object[0]));
             ActionEvents.OnMemberChanged += ActionEvents_Changed;
             ActionEvents.OnEditItem += ActionEvents_EditItem;
-            Statuses = new CollectionBoxViewModel(form.MapEditForm, new StringConv(typeof(StatusEffect), new object[0]));
+            Statuses = new CollectionBoxViewModel(dialogService, new StringConv(typeof(StatusEffect), new object[0]));
             Statuses.OnMemberChanged += Statuses_Changed;
             Statuses.OnEditItem += Statuses_EditItem;
         }
@@ -575,9 +576,10 @@ namespace RogueEssence.Dev.ViewModels
                 op(index, element);
                 return true;
             };
+            // TODO NEW EDITOR: RESOLVE THIS
 
-            form.MapEditForm.RegisterChild(frmData);
-            frmData.Show();
+            // form.MapEditForm.RegisterChild(frmData);
+            // frmData.Show();
         }
 
         public void Statuses_Changed()
@@ -627,8 +629,9 @@ namespace RogueEssence.Dev.ViewModels
                 }
             };
 
-            form.MapEditForm.RegisterChild(frmData);
-            frmData.Show();
+            // TODO NEW EDITOR: RESOLVE THIS
+            // form.MapEditForm.RegisterChild(frmData);
+            // frmData.Show();
         }
 
         /// <summary>
