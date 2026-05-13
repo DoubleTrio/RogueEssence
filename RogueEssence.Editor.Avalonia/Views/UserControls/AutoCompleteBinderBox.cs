@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using System;
 using System.Linq;
+using Avalonia.Interactivity;
 
 
 namespace RogueEssence.Dev.Views {
@@ -35,7 +36,7 @@ public class AutoCompleteBinderBox<T> : AutoCompleteBox
         }
     }
 
-    protected override void OnLostFocus(Avalonia.Interactivity.RoutedEventArgs e)
+    protected override void OnLostFocus(FocusChangedEventArgs e)
     {
         base.OnLostFocus(e);
         AcceptTypedText();

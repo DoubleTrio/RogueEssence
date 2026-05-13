@@ -8,6 +8,7 @@
                     mc:Ignorable="d"
                     x:Name="ThisControl"
                     x:Class="RogueEssence.Dev.Views.ModConfigWindowView"
+                    x:DataType="vm:ModConfigWindowViewModel"
                     Title="Mod Config" Width="420" Height="600">
     <Design.DataContext>
         <vm:ModConfigWindowViewModel />

@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
         x:Class="RogueEssence.Dev.Views.MapEditForm"
+        x:DataType="vm:MapEditViewModel"
         Width="850" Height="540" Opened="Window_Loaded" Closed="Window_Closed">
   <!--Icon="/Assets/app-logo.ico"-->
     <Design.DataContext>
@@ -38,7 +39,8 @@
         <MenuItem Header="_Load from .png into Tileset" Command="{Binding mnuImportFromPng_Click}"/>
         <MenuItem Header="_Load Tileset into Layer" Command="{Binding mnuImportFromTileset_Click}"/>
         <MenuItem Header="_Clear Layer" Command="{Binding mnuClearLayer_Click}"/>
-        <MenuItem Header="_Load Standardize Frame Length" Command="{Binding mnuStandardizeFrameLength_Click}"/>
+        <!-- TODO: Check -->
+        <!-- <MenuItem Header="_Load Standardize Frame Length" Command="{Binding mnuStandardizeFrameLength_Click}"/> -->
       </MenuItem>
     </Menu>
     <Grid>

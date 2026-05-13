@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
         x:Class="RogueEssence.Dev.Views.MapResizeWindow"
+        x:DataType="vm:MapResizeViewModel"
         Title="Resize Map" Height="380" Width="200">
   <Design.DataContext>
     <vm:MapResizeViewModel/>

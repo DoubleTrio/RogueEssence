@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
         x:Class="RogueEssence.Dev.Views.AnimEditForm"
+        x:DataType="vm:AnimEditViewModel"
         Title="{Binding Name}" Height="280" Width="300" Closed="Window_Closed">
   <!--Icon="/Assets/app-logo.ico"-->
     <Design.DataContext>
@@ -34,10 +35,11 @@
         <ColumnDefinition/>
       </Grid.ColumnDefinitions>
       <views:SearchListBox DataContext="{Binding Anims}" Margin="4" Grid.ColumnSpan="4"/>
-      <Button Command="{Binding btnImport_Click}" Margin="4" Grid.Row="1" Grid.Column="0" IsEnabled="{Binding ChosenAnim, Converter={x:Static ObjectConverters.IsNotNull}}">Import</Button>
+      <!-- TODO: Check -->
+      <!-- <Button Command="{Binding btnImport_Click}" Margin="4" Grid.Row="1" Grid.Column="0" IsEnabled="{Binding ChosenAnim, Converter={x:Static ObjectConverters.IsNotNull}}">Import</Button> -->
       <Button Command="{Binding btnReImport_Click}" Margin="4" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CachedPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">Re-Import</Button>
-      <Button Command="{Binding btnExport_Click}" Margin="4" Grid.Row="1" Grid.Column="2" IsEnabled="{Binding ChosenAnim, Converter={x:Static ObjectConverters.IsNotNull}}">Export</Button>
-      <Button Command="{Binding btnDelete_Click}" Margin="4" Grid.Row="1" Grid.Column="3" IsEnabled="{Binding ChosenAnim, Converter={x:Static ObjectConverters.IsNotNull}}">Delete</Button>
+      <!-- <Button Command="{Binding btnExport_Click}" Margin="4" Grid.Row="1" Grid.Column="2" IsEnabled="{Binding ChosenAnim, Converter={x:Static ObjectConverters.IsNotNull}}">Export</Button> -->
+      <!-- <Button Command="{Binding btnDelete_Click}" Margin="4" Grid.Row="1" Grid.Column="3" IsEnabled="{Binding ChosenAnim, Converter={x:Static ObjectConverters.IsNotNull}}">Delete</Button> -->
     </Grid>
   </DockPanel>
 </Window>

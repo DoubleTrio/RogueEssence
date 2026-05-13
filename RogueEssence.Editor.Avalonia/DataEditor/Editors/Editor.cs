@@ -53,9 +53,10 @@ namespace RogueEssence.Dev
             TextBlock lblName = new TextBlock();
             lblName.Margin = new Thickness(0, 4, 0, 0);
             lblName.Text = Text.GetMemberTitle(name) + ":";
-
             if (desc != null)
+            {
                 ToolTip.SetTip(lblName, desc);
+            }
 
             control.Children.Add(lblName);
         }

@@ -62,7 +62,9 @@ namespace RogueEssence.Dev.Native
 
         public void SetupWindow(Window window)
         {
-            window.ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
+            window.ExtendClientAreaToDecorationsHint = true;
+            window.WindowDecorations = WindowDecorations.None;
+            
             window.ExtendClientAreaToDecorationsHint = true;
             window.Classes.Add("fix_maximized_padding");
 

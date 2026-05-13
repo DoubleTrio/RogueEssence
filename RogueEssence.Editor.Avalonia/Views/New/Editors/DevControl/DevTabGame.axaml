@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             x:DataType="vm:DevTabGameViewModel"
              x:Class="RogueEssence.Dev.Views.DevTabGame">
     <Design.DataContext>
         <vm:DevTabGameViewModel />
     </Design.DataContext>
     <Grid ColumnSpacing="8" RowSpacing="8" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
           ColumnDefinitions="* *">
-        <CheckBox Grid.Row="0" Grid.Column="0" Content="Hide Objects" IsChecked="{Binding HideObjects}" />
+        <CheckBox Grid.Row="0" Grid.Column="0" Content="Hide Objects" IsChecked="{Binding HideObjects}" ToolTip.Tip="Your tooltip text here" />
         <CheckBox Grid.Row="0" Grid.Column="1" Content="Hide Sprites" IsChecked="{Binding HideSprites}" />
         <Button Classes="flat" Command="{Binding btnSpawn_Click}" Margin="4" Grid.Row="1" Grid.Column="0">Create Clone</Button>
         <Button Classes="flat" Command="{Binding btnDespawn_Click}" Margin="4" Grid.Row="1" Grid.Column="1">Clear All Foes</Button>

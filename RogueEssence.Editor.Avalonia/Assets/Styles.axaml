@@ -308,7 +308,6 @@
         <Setter Property="Background" Value="{DynamicResource Brush.Window}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border0}" />
-        <Setter Property="SystemDecorations" Value="Full" />
         <Setter Property="Padding" Value="0" />
 
         <Style.Resources>
@@ -329,7 +328,7 @@
     <Style Selector="Window.custom_window_frame">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="SystemDecorations" Value="None" />
+        <!-- <Setter Property="SystemDecorations" Value="None" /> -->
         <Setter Property="Padding" Value="12" />
         <Setter Property="CornerRadius" Value="8" />
 
@@ -723,34 +722,34 @@
         </Style.Resources>
     </Style>
 
-    <Style Selector="ToolTip">
-        <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}" />
-        <Setter Property="Background" Value="{DynamicResource Brush.Popup}" />
-        <Setter Property="MaxWidth" Value="800" />
-        <Setter Property="VerticalOffset" Value="-8" />
-        <Setter Property="TextBlock.TextDecorations" Value="" />
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Grid Effect="drop-shadow(0 0 8 #30000000)">
-                    <Border Margin="8"
-                            Padding="8,6"
-                            CornerRadius="4"
-                            Background="{DynamicResource Brush.Popup}"
-                            BorderBrush="{DynamicResource Brush.Border2}"
-                            BorderThickness="1"
-                            MaxWidth="{TemplateBinding MaxWidth}"
-                            MinHeight="{TemplateBinding MinHeight}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
-                        <ContentPresenter Name="PART_ContentPresenter"
-                                          MaxWidth="{TemplateBinding MaxWidth}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          TextBlock.TextWrapping="Wrap" />
-                    </Border>
-                </Grid>
-            </ControlTemplate>
-        </Setter>
-    </Style>
+    <!-- <Style Selector="ToolTip"> -->
+    <!--     <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}" /> -->
+    <!--     <Setter Property="Background" Value="{DynamicResource Brush.Popup}" /> -->
+    <!--     <Setter Property="MaxWidth" Value="800" /> -->
+    <!--     <Setter Property="VerticalOffset" Value="-8" /> -->
+    <!--     <Setter Property="TextBlock.TextDecorations" Value="" /> -->
+    <!--     <Setter Property="Template"> -->
+    <!--         <ControlTemplate> -->
+    <!--             <Grid Effect="drop-shadow(0 0 8 #30000000)"> -->
+    <!--                 <Border Margin="8" -->
+    <!--                         Padding="8,6" -->
+    <!--                         CornerRadius="4" -->
+    <!--                         Background="{DynamicResource Brush.Popup}" -->
+    <!--                         BorderBrush="{DynamicResource Brush.Border2}" -->
+    <!--                         BorderThickness="1" -->
+    <!--                         MaxWidth="{TemplateBinding MaxWidth}" -->
+    <!--                         MinHeight="{TemplateBinding MinHeight}" -->
+    <!--                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"> -->
+    <!--                     <ContentPresenter Name="PART_ContentPresenter" -->
+    <!--                                       MaxWidth="{TemplateBinding MaxWidth}" -->
+    <!--                                       Content="{TemplateBinding Content}" -->
+    <!--                                       ContentTemplate="{TemplateBinding ContentTemplate}" -->
+    <!--                                       TextBlock.TextWrapping="Wrap" /> -->
+    <!--                 </Border> -->
+    <!--             </Grid> -->
+    <!--         </ControlTemplate> -->
+    <!--     </Setter> -->
+    <!-- </Style> -->
 
     <Style Selector="TabItem">
         <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}" />

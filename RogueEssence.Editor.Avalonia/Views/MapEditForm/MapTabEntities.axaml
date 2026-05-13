@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:RogueEssence.Dev"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              mc:Ignorable="d"
+             x:DataType="vm:MapTabEntitiesViewModel"
              x:Class="RogueEssence.Dev.Views.MapTabEntities">
   <Design.DataContext>
     <vm:MapTabEntitiesViewModel/>

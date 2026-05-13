@@ -487,8 +487,10 @@ public partial class DevForm : ChromelessWindow, IRootEditor
         {
             HasLeftCaptionButton = true;
             CaptionHeight = new GridLength(34);
-            ExtendClientAreaChromeHints =
-                ExtendClientAreaChromeHints.SystemChrome | ExtendClientAreaChromeHints.OSXThickTitleBar;
+            ExtendClientAreaToDecorationsHint = true;
+            WindowDecorations = WindowDecorations.Full;
+            // ExtendClientAreaChromeHints =
+            // ExtendClientAreaChromeHints.SystemChrome | ExtendClientAreaChromeHints.OSXThickTitleBar;
         }
         else if (UseSystemWindowFrame)
         {
@@ -733,7 +735,7 @@ public partial class DevForm : ChromelessWindow, IRootEditor
         if (grid.ContextMenu?.IsOpen == true)
             return;
         
-        var window = grid.GetVisualRoot() as Window;
+        var window = grid.GetPresentationSource() as Window;
         if (window is { IsActive: false })
             return; 
         // (grid.RowSelection.SelectedItem as DataItemNode)?.Parent?.ResaveAsFile(grid.RowSelection.SelectedItem as DataItemNode)

@@ -27,10 +27,12 @@
                   Data="{StaticResource Icons.SoftwareUpdate}"
                   IsVisible="{OnPlatform True, macOS=False}" />
 
-            <TextBlock Classes="bold"
-                       Text="{Binding Title}"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                       IsHitTestVisible="False" />
+            <!-- TODO: Check -->
+            <!-- -->
+            <!-- <TextBlock Classes="bold" -->
+            <!--            Text="{Binding Title}" -->
+            <!--            HorizontalAlignment="Center" VerticalAlignment="Center" -->
+            <!--            IsHitTestVisible="False" /> -->
 
             <v:CaptionButtons HorizontalAlignment="Right"
                               IsCloseButtonOnly="True"

@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Class="RogueEssence.Dev.Views.MapLayerWindow"
+        x:DataType="vm:MapLayerViewModel"
         Title="Map Layer" Width="200" Height="200">
   <Design.DataContext>
     <vm:MapLayerViewModel/>
@@ -28,7 +29,8 @@
     <RadioButton Margin="4,0" IsChecked="{Binding Front}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Draw in Front</RadioButton>
     <RadioButton Margin="4,0" IsChecked="{Binding Mid}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">Draw on Terrain</RadioButton>
     <RadioButton Margin="4,0" IsChecked="{Binding Back}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Draw below Terrain</RadioButton>
-    <Button Click="btnOK_Click" IsEnabled="{Binding AllowConfirm}" Margin="4" Grid.Row="5" Grid.Column="0">OK</Button>
+    <!-- TODO: Check -->
+    <!-- <Button Click="btnOK_Click" IsEnabled="{Binding AllowConfirm}" Margin="4" Grid.Row="5" Grid.Column="0">OK</Button> -->
     <Button Click="btnCancel_Click" Margin="4" Grid.Row="5" Grid.Column="1">Cancel</Button>
   </Grid>
 </Window>

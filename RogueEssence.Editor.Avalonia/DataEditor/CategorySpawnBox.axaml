@@ -18,7 +18,9 @@
 
   <Grid RowDefinitions="*, 42" ColumnDefinitions="*, 30">
 
-    <DataGrid IsReadOnly="true"
+    <DataGrid 
+              x:DataType="vm:SpawnListBoxViewModel"
+              IsReadOnly="true"
               HorizontalAlignment="Stretch"
               ItemsSource="{Binding Collection}"
               SelectedIndex="{Binding CurrentElement, Mode=TwoWay}"
@@ -30,13 +32,13 @@
               MinHeight="50"
               Classes="default">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="Weight" Binding="{Binding DisplayWeight}" Width="70" />
-        <DataGridTextColumn Header="Chance" Binding="{Binding Path=DisplayChance, Mode=OneWay}" Width="80" />
+        <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="70" />
+        <DataGridTextColumn Header="Chance" Binding="{Binding Path=Chance, Mode=OneWay}" Width="80" />
         <DataGridTextColumn Header="Value"  Binding="{Binding Path=DisplayValue}" Width="*" />
       </DataGrid.Columns>
     </DataGrid>
 
-    <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="10, 0, 0, 0" VerticalAlignment="Top" Spacing="30">
+    <StackPanel x:DataType="vm:SpawnListBoxViewModel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="10, 0, 0, 0" VerticalAlignment="Top" Spacing="30">
       <StackPanel Spacing="0">
         <Button x:Name="CategorySpawnBoxAddCategoryButton"
                 PointerReleased="CategorySpawnBoxAddCategoryButton_OnPointerReleased"
@@ -48,7 +50,8 @@
                 Classes="secondary" Margin="0, 0" Padding="4, 3">
           <Path Width="10" Height="10" Margin="0, 2, 0, 0" Data="{StaticResource Icons.PlusCircleFill}" />
         </Button>
-        <Button Command="{Binding btnDelete_Click}"
+        <Button 
+                Command="{Binding btnDelete_Click}"
                 IsEnabled="{Binding HasSelection}"
                 Classes="secondary" Margin="0, 0" Padding="4, 3">
           <Path Width="10" Height="10" Margin="0, 0, 0, 0" Data="{StaticResource Icons.Minus}" />
@@ -68,7 +71,7 @@
       </StackPanel>
     </StackPanel>
 
-    <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto, *">
+    <Grid x:DataType="vm:SpawnListBoxViewModel" Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto, *">
       <TextBlock VerticalAlignment="Center" Margin="4,0" Grid.Column="0">Weight:</TextBlock>
       <NumericUpDown IsEnabled="{Binding Path=CurrentElement, Converter={StaticResource ValidIdxConverter}, ConverterParameter=false}"
                      Value="{Binding CurrentWeight}"

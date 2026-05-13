@@ -15,7 +15,9 @@
                               ContentTemplate="{StaticResource NodeContentTemplate}" />
             <Button x:Name="DataRootAddButton" Grid.Column="2" Classes="icon_button"
                     IsVisible="{Binding IsPointerOver, RelativeSource={RelativeSource AncestorType=TreeViewItem}}"
-                    Command="{Binding AddCommand}">
+                 
+                    >
+                <!-- Command="{Binding AddCommand}" -->
                 <Path Stretch="Fill"
                       Fill="{DynamicResource Brush.FG1}"
                       Width="10" Height="10"

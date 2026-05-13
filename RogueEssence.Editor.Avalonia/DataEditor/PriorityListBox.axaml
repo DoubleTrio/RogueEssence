@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
+             x:DataType="vm:PriorityListBoxViewModel"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              x:Class="RogueEssence.Dev.Views.PriorityListBox">
     <UserControl.Resources>
@@ -26,7 +27,6 @@
             Margin="4" Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             MinHeight="50"
-            x:DataType="vm:PriorityElement"
             Classes="default">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Priority"

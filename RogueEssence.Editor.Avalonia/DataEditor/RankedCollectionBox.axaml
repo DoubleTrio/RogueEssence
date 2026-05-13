@@ -7,6 +7,7 @@
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
+             x:DataType="vm:CollectionBoxViewModel"
              x:Class="RogueEssence.Dev.Views.RankedCollectionBox">
   <Design.DataContext>
     <vm:CollectionBoxViewModel/>

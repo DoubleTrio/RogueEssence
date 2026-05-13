@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:RogueEssence.Dev"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              mc:Ignorable="d"
+             x:DataType="vm:EntityBrowserViewModel"
              x:Class="RogueEssence.Dev.Views.EntityBrowser">
   <Design.DataContext>
     <vm:EntityBrowserViewModel/>

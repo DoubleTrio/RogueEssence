@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Class="RogueEssence.Dev.Views.EntityLayerWindow"
+        x:DataType="vm:AnimLayerViewModel"
         Title="Map Layer" Width="200" Height="172">
   <Design.DataContext>
     <vm:AnimLayerViewModel/>
@@ -23,7 +24,8 @@
     </Grid.ColumnDefinitions>
     <TextBlock VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Layer Name</TextBlock>
     <TextBox Text="{Binding Name}" VerticalAlignment="Center" Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
-    <Button Click="btnOK_Click" IsEnabled="{Binding AllowConfirm}" Margin="4" Grid.Row="3" Grid.Column="0">OK</Button>
+    <!-- TODO: Check -->
+    <!-- <Button Click="btnOK_Click" IsEnabled="{Binding AllowConfirm}" Margin="4" Grid.Row="3" Grid.Column="0">OK</Button> -->
     <Button Click="btnCancel_Click" Margin="4" Grid.Row="3" Grid.Column="1">Cancel</Button>
   </Grid>
 </Window>

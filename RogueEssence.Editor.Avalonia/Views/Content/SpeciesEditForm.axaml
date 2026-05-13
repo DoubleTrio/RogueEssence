@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
         x:Class="RogueEssence.Dev.Views.SpeciesEditForm"
+        x:DataType="vm:SpeciesEditPageViewModel"
         Title="{Binding Name}" Height="280" Width="300">
   <!--Icon="/Assets/app-logo.ico"-->
     <Design.DataContext>
@@ -54,7 +55,8 @@
             <ContextMenu.Styles>
               <Style Selector="MenuItem">
                 <Setter Property="Header" Value="{Binding Name}"/>
-                <Setter Property="Command" Value="{Binding Command}"/>
+                <!-- TODO: Check -->
+                <!-- <Setter Property="Command" Value="{Binding Command}"/> -->
               </Style>
             </ContextMenu.Styles>
           </ContextMenu>

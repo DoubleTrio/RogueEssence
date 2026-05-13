@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Class="RogueEssence.Dev.Views.AnimChoiceWindow"
+        x:DataType="vm:AnimChoiceViewModel"
         Title="Anim" Width="200" Height="100">
   <Design.DataContext>
     <vm:AnimChoiceViewModel/>

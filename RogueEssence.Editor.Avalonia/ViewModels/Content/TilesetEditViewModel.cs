@@ -246,38 +246,38 @@ namespace RogueEssence.Dev.ViewModels
 
         public async void btnExport_Click()
         {
-            //get current sprite
-            string animData = tileIndices[Tilesets.InternalIndex];
-
-            //remember addresses in registry
-            string folderName = DevForm.GetConfig("TilesetDir", Directory.GetCurrentDirectory());
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Directory = folderName;
-
-            FileDialogFilter filter = new FileDialogFilter();
-            filter.Name = "PNG Files";
-            filter.Extensions.Add("png");
-            saveFileDialog.Filters.Add(filter);
-
-            string folder = await saveFileDialog.ShowAsync(parent);
-
-            if (!String.IsNullOrEmpty(folder))
-            {
-                DevForm.SetConfig("TilesetDir", Path.GetDirectoryName(folder));
-                //CachedPath = folder;
-
-                try
-                {
-                    DevForm.ExecuteOrPend(() => { Export(folder, animData); });
-                }
-                catch (Exception ex)
-                {
-                    DiagManager.Instance.LogError(ex, false);
-                    await MessageBox.Show(parent, "Error exporting to\n" + CachedPath + "\n\n" + ex.Message, "Export Failed", MessageBox.MessageBoxButtons.Ok);
-                    return;
-                }
-            }
+            // //get current sprite
+            // string animData = tileIndices[Tilesets.InternalIndex];
+            //
+            // //remember addresses in registry
+            // string folderName = DevForm.GetConfig("TilesetDir", Directory.GetCurrentDirectory());
+            //
+            // SaveFileDialog saveFileDialog = new SaveFileDialog();
+            // saveFileDialog.Directory = folderName;
+            //
+            // FileDialogFilter filter = new FileDialogFilter();
+            // filter.Name = "PNG Files";
+            // filter.Extensions.Add("png");
+            // saveFileDialog.Filters.Add(filter);
+            //
+            // string folder = await saveFileDialog.ShowAsync(parent);
+            //
+            // if (!String.IsNullOrEmpty(folder))
+            // {
+            //     DevForm.SetConfig("TilesetDir", Path.GetDirectoryName(folder));
+            //     //CachedPath = folder;
+            //
+            //     try
+            //     {
+            //         DevForm.ExecuteOrPend(() => { Export(folder, animData); });
+            //     }
+            //     catch (Exception ex)
+            //     {
+            //         DiagManager.Instance.LogError(ex, false);
+            //         await MessageBox.Show(parent, "Error exporting to\n" + CachedPath + "\n\n" + ex.Message, "Export Failed", MessageBox.MessageBoxButtons.Ok);
+            //         return;
+            //     }
+            // }
         }
 
 

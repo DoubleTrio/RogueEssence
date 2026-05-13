@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
         x:Class="RogueEssence.Dev.Views.TileEditForm"
+        x:DataType="vm:TileEditViewModel"
         Title="{Binding Name}" Width="640" Height="420" >
   <!--Icon="/Assets/app-logo.ico"-->
     <Design.DataContext>

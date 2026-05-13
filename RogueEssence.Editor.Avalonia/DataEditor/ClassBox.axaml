@@ -4,11 +4,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             x:DataType="vm:ClassBoxViewModel"
              x:Class="RogueEssence.Dev.Views.ClassBox">
   <Design.DataContext>
     <vm:ClassBoxViewModel/>
   </Design.DataContext>
-  <Grid ColumnDefinitions="80, *">
+  <Grid x:DataType="vm:ClassBoxViewModel" ColumnDefinitions="80, *">
     <Button x:Name="ClassBoxEditButton" PointerReleased="ClassBoxEditButton_OnPointerReleased" Classes="flat">Edit</Button>
     <TextBlock Text="{Binding Name}" Margin="4,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" MaxWidth="{Binding $parent[Window].Bounds.Width}" Grid.Column="1"/>
   </Grid>

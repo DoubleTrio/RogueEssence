@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
+             x:DataType="vm:CollectionBoxViewModel"
              x:Class="RogueEssence.Dev.Views.CollectionBox">
     <Design.DataContext>
         <vm:CollectionBoxViewModel />

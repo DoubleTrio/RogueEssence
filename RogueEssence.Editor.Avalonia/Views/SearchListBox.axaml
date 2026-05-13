@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="RogueEssence.Dev.Views.SearchListBox"
+             x:DataType="vm:SearchListBoxViewModel"
              DataContextChanged="slb_DataContextChanged">
   <Design.DataContext>
     <vm:SearchListBoxViewModel/>

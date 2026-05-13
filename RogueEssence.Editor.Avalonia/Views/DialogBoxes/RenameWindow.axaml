@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Class="RogueEssence.Dev.Views.RenameWindow"
+        x:DataType="vm:RenameViewModel"
         Title="Name" Width="200" Height="100">
   <Design.DataContext>
     <vm:RenameViewModel/>

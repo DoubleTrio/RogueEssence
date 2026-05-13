@@ -8,6 +8,7 @@
              xmlns:data="clr-namespace:RogueEssence.Data;assembly=RogueEssence"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              mc:Ignorable="d"
+             x:DataType="vm:AutotileBrowserViewModel"
              x:Class="RogueEssence.Dev.Views.AutotileBrowser">
   <Design.DataContext>
     <vm:AutotileBrowserViewModel/>

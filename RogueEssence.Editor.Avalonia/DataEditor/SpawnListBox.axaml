@@ -7,6 +7,7 @@
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
+             x:DataType="vm:SpawnListBoxViewModel"
              x:Class="RogueEssence.Dev.Views.SpawnListBox">
     <Design.DataContext>
         <vm:SpawnListBoxViewModel />

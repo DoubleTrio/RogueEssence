@@ -6,6 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
+             x:DataType="vm:DevTabTravelViewModel"
              x:Class="RogueEssence.Dev.Views.DevTabTravel">
   <Design.DataContext>
     <vm:DevTabTravelViewModel/>

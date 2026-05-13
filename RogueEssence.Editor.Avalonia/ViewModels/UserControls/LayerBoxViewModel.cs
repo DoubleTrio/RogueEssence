@@ -13,18 +13,13 @@ using RogueEssence.Dev.Views;
 
 namespace RogueEssence.Dev.ViewModels
 {
-    public abstract class LayerBoxViewModel<T> : ViewModelBase, ILayerBoxViewModel
+    public abstract class LayerBoxViewModel<T>(UndoStack stack) : ViewModelBase, ILayerBoxViewModel
         where T : IMapLayer
     {
-        protected UndoStack edits { get; }
+        protected UndoStack edits { get; } = stack;
 
-        public LayerBoxViewModel(UndoStack stack)
-        {
-            this.edits = stack;
-            Layers = new WrappedObservableCollection<T>();
-        }
+        public WrappedObservableCollection<T> Layers { get; } = new();
 
-        public WrappedObservableCollection<T> Layers { get; }
         public void SetLayer(int idx, T val)
         {
             int tmp = ChosenLayer;

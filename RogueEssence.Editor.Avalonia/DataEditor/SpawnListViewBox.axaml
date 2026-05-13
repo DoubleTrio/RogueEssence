@@ -7,6 +7,7 @@
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
+             x:DataType="vm:SpawnRangeListBoxViewModel"
              x:Class="RogueEssence.Dev.Views.SpawnListViewBox">
     <Design.DataContext>
         <vm:SpawnListBoxViewModel/>
@@ -24,7 +25,8 @@
               MinHeight="50"
               Classes="default">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Chance" Binding="{Binding Path=Chance, Converter={StaticResource PercentConverter}, Mode=OneWay}" Width="80" />
+            <!-- TODO: Check Chance -->
+            <!-- <DataGridTextColumn Header="Chance" Binding="{Binding Path=Chance, Converter={StaticResource PercentConverter}, Mode=OneWay}" Width="80" /> -->
             <DataGridTextColumn Header="Value"  Binding="{Binding Path=DisplayValue}" Width="*" />
         </DataGrid.Columns>
     </DataGrid>

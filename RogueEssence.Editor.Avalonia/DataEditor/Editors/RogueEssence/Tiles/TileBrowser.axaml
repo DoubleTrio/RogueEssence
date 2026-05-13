@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:RogueEssence.Dev"
              xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
              mc:Ignorable="d"
+             x:DataType="vm:TileBrowserViewModel"
              x:Class="RogueEssence.Dev.Views.TileBrowser">
   <Design.DataContext>
     <vm:TileBrowserViewModel/>
@@ -93,11 +94,12 @@
       </Grid>
     </ScrollViewer>
     <views:SearchListBox DataContext="{Binding Tilesets}" Margin="4" Grid.Row="1" Grid.Column="1">
-      <views:SearchListBox.ContextMenu>
-        <ContextMenu>
-          <MenuItem Header="Delete Tileset" Command="{Binding $parent[4].DataContext.mnuDeleteTileset_Click}"/>
-        </ContextMenu>
-      </views:SearchListBox.ContextMenu>
+      <!-- TODO: Check -->
+      <!-- <views:SearchListBox.ContextMenu> -->
+      <!--   <ContextMenu> -->
+      <!--     <MenuItem Header="Delete Tileset" Command="{Binding $parent[4].((vm:TileBrowserViewModel)DataContext).mnuDeleteTileset_Click}"/> -->
+      <!--   </ContextMenu> -->
+      <!-- </views:SearchListBox.ContextMenu> -->
     </views:SearchListBox>
   </Grid>
 </UserControl>

@@ -13,7 +13,7 @@ using Avalonia.Styling;
 
 namespace RogueEssence.Dev.Views
 {
-    public class SearchComboBox : ComboBox, IStyleable
+    public class SearchComboBox : ComboBox
     {
         protected override Type StyleKeyOverride => typeof(ComboBox);
 

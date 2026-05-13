@@ -23,7 +23,8 @@ namespace RogueEssence.Dev.Native
 
         public void SetupWindow(Window window)
         {
-            window.ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.SystemChrome;
+            window.WindowDecorations = WindowDecorations.None;
+            // window.ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.SystemChrome;
             window.ExtendClientAreaToDecorationsHint = true;
         }
 

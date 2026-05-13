@@ -22,12 +22,12 @@ namespace RogueEssence.Dev.Native
         {
             if (OS.UseSystemWindowFrame)
             {
-                window.ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
+                window.WindowDecorations = WindowDecorations.BorderOnly;
                 window.ExtendClientAreaToDecorationsHint = false;
             }
             else
             {
-                window.ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
+                window.WindowDecorations = WindowDecorations.None;
                 window.ExtendClientAreaToDecorationsHint = true;
                 window.Classes.Add("custom_window_frame");
             }

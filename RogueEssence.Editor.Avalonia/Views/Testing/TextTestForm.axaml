@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:converters="clr-namespace:RogueEssence.Dev.Converters"
         x:Class="RogueEssence.Dev.Views.TextTestForm"
+        x:DataType="vm:TextTestViewModel"
         Title="Text Test" Height="280" Width="300">
   <!--Icon="/Assets/app-logo.ico"-->
     <Design.DataContext>

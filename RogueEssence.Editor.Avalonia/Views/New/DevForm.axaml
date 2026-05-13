@@ -11,6 +11,7 @@
                     d:DesignHeight="450"
                     x:Class="RogueEssence.Dev.Views.DevForm"
                     x:Name="WindowMain"
+                    x:DataType="vm:DevFormViewModel"
                     Opened="Window_Loaded" Closed="Window_Closed"
                     Title="Avalonia PMD Editor">
 
