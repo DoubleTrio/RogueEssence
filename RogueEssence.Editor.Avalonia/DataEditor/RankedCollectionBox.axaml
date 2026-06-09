@@ -49,7 +49,7 @@
       <Button Command="{Binding MoveUp}" IsEnabled="{Binding CanMoveUp}" Classes="secondary" Margin="0,0" Padding="4,3">
         <Path Width="10" Height="10" Margin="0,2,0,0" Data="{StaticResource Icons.CaretUpFill}" />
       </Button>
-      <Button Command="{Binding MoveDown}" Classes="secondary" Margin="0,0" Padding="4,3">
+      <Button Command="{Binding MoveDown}" IsEnabled="{Binding CanMoveDown}" Classes="secondary" Margin="0,0" Padding="4,3">
         <Path Width="10" Height="10" Data="{StaticResource Icons.CaretDownFill}" />
       </Button>
     </StackPanel>

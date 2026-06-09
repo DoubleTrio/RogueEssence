@@ -145,14 +145,14 @@ namespace RogueEssence.Dev
             obj = SaveClassControls(control, obj.ToString(), obj.GetType(), new object[0], true, subGroupStack, false);
         }
 
-        public static object SaveClassControls(StackPanel control, string name, Type type, object[] attributes, bool isWindow, Type[] subGroupStack, bool advancedEdit)
+        public static object SaveClassControls(StackPanel control, string name, Type type, object[] attributes, bool isWindow, Type[] subGroupStack, bool advancedEdit, int addIndex = 0)
         {
             IEditor converter = findEditor(type, attributes, advancedEdit);
-            return converter.SaveClassControls(control, name, type, attributes, isWindow, subGroupStack, advancedEdit);
+            return converter.SaveClassControls(control, name, type, attributes, isWindow, subGroupStack, advancedEdit, addIndex);
         }
 
 
-        public static object SaveWindowControls(StackPanel control, string name, Type type, object[] attributes, Type[] subGroupStack, bool advancedEdit)
+        public static object SaveWindowControls(StackPanel control, string name, Type type, object[] attributes, Type[] subGroupStack, bool advancedEdit, int addIndex = 0)
         {
             IEditor converter = findEditor(type, attributes, advancedEdit);
             return converter.SaveWindowControls(control, name, type, attributes, subGroupStack);
@@ -214,6 +214,11 @@ namespace RogueEssence.Dev
             if (friendlyTypeNames.TryGetValue(type, out displayName))
                 return displayName;
             return type.GetDisplayName();
+        }
+        
+        public static bool IsDataGridEditableType(object obj)
+        {
+            return obj.GetType().IsPrimitive || obj is string;
         }
     }
 }

@@ -641,9 +641,9 @@ namespace RogueEssence.Dev
         {
             LoadMemberControl(parent, (T)obj, control, name, type, attributes, member, isWindow, subGroupStack);
         }
-        object IEditor.SaveClassControls(StackPanel control, string name, Type type, object[] attributes, bool isWindow, Type[] subGroupStack, bool advancedEdit)
+        object IEditor.SaveClassControls(StackPanel control, string name, Type type, object[] attributes, bool isWindow, Type[] subGroupStack, bool advancedEdit, int addIndex)
         {
-            int controlIndex = 0;
+            int controlIndex = 0 + addIndex;
 
             bool subGroup = DefaultSubgroup;
             if (ReflectionExt.FindAttribute<SepGroupAttribute>(attributes) != null)
@@ -727,7 +727,7 @@ namespace RogueEssence.Dev
                     Type[] newStack = new Type[subGroupStack.Length + 1];
                     subGroupStack.CopyTo(newStack, 0);
                     newStack[newStack.Length - 1] = type;
-                    return DataEditor.SaveWindowControls(chosenParent, name, chosenType, attributes, newStack, advancedEdit);
+                    return DataEditor.SaveWindowControls(chosenParent, name, chosenType, attributes, newStack, advancedEdit, addIndex);
                 }
 
             }

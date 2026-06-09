@@ -7,37 +7,78 @@ using Avalonia.Interactivity;
 using Avalonia.Controls;
 using RogueElements;
 using System.Collections;
+using System.Threading.Tasks;
 using Avalonia.Input;
 using RogueEssence.Dev.Services;
 using RogueEssence.Dev.Views;
 
+// public class DictionaryElement
+// {
+//     private object key;
+//     public object Key
+//     {
+//         get { return key; }
+//     }
+//     private object value;
+//     public object Value
+//     {
+//         get { return value; }
+//     }
+//     public string DisplayValue
+//     {
+//         get { return conv.GetString(value); }
+//     }
+//
+//     private StringConv conv { get; }
+//
+//     public DictionaryElement(StringConv conv, object key, object value)
+//     {
+//         this.conv = conv;
+//         this.key = key;
+//         this.value = value;
+//     }
+//
+// }
+
 namespace RogueEssence.Dev.ViewModels
 {
-    public class DictionaryElement
+    public class DictionaryElement : ViewModelBase
     {
-        private object key;
+        private object _key;
         public object Key
         {
-            get { return key; }
-        }
-        private object value;
-        public object Value
-        {
-            get { return value; }
-        }
-        public string DisplayValue
-        {
-            get { return conv.GetString(value); }
+            get => _key;
+            private set => this.RaiseAndSetIfChanged(ref _key, value);
         }
 
-        private StringConv conv;
+        private object _value;
+        public object Value
+        {
+            get => _value;
+            private set
+            {
+                Console.WriteLine(_value + "changing");
+                this.RaiseAndSetIfChanged(ref _value, value);
+            }
+        }
+
+        public string DisplayValue => conv.GetString(_value);
+
+        private StringConv conv { get; }
 
         public DictionaryElement(StringConv conv, object key, object value)
         {
             this.conv = conv;
-            this.key = key;
-            this.value = value;
+            _key = key;
+            _value = value;
+
+            Console.WriteLine(value.GetType() + "value");
+            this.WhenAnyValue(x => x.Value)
+                .Subscribe(_ => this.RaisePropertyChanged(nameof(DisplayValue)));
         }
+
+        public void UpdateKey(object newKey) => Key = newKey;
+        public void UpdateValue(object newValue) => Value = newValue;
     }
 
     
@@ -45,6 +86,9 @@ namespace RogueEssence.Dev.ViewModels
     // Check for the type of the object in the key and value and have some ifs...
     public class DictionaryBoxViewModel : ViewModelBase
     {
+        public bool IsKeyPrimitive => Collection.Count > 0 && DataEditor.IsDataGridEditableType(Collection[0].Key);
+        public bool IsValuePrimitive => Collection.Count > 0 && DataEditor.IsDataGridEditableType(Collection[0].Value);
+        
         public ObservableCollection<DictionaryElement> Collection { get; }
 
         private int selectedIndex;
@@ -57,6 +101,8 @@ namespace RogueEssence.Dev.ViewModels
         public delegate void EditElementOp(object oldKey, object newKey, object element);
         public delegate void ElementOp(object key, object element, bool advancedEdit, EditElementOp op);
 
+        public event ElementOp OnAddItem;
+        
         public event ElementOp OnEditKey;
         public event ElementOp OnEditItem;
         public event Action OnMemberChanged;
@@ -97,36 +143,58 @@ namespace RogueEssence.Dev.ViewModels
 
         private void editItem(object oldKey, object key, object element)
         {
-            int index = getIndexFromKey(key);
+            int index = GetIndexFromKey(key);
             Collection[index] = new DictionaryElement(StringConv, Collection[index].Key, element);
             SelectedIndex = index;
             OnMemberChanged?.Invoke();
         }
-        private async void editKey(object oldKey, object key, object element)
+        
+        public async Task<bool> CheckKeyDuplicateAsync(object key)
         {
-            int existingIndex = getIndexFromKey(key);
+            int existingIndex = GetIndexFromKey(key);
             if (existingIndex > -1)
             {
-                await MessageBoxWindowView.Show(_dialogService, "Dictionary already contains this key!", "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
-                return;
+                await MessageBoxWindowView.Show(_dialogService, $"Dictionary already contains the key \"{key}\"!", "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
+                return true;
             }
+            return false;
+        }
+        
+        public void UpdateKey(int index, object newKey)
+        {
+            if (index == -1) return;
+            Collection[index].UpdateKey(newKey);
+        }
+        
+        public void UpdateValue(int index, object newValue)
+        {
+            if (index == -1) return;
+            Collection[index].UpdateValue(newValue);
+        }
 
-            int index = getIndexFromKey(oldKey);
+        
+        private async void editKey(object oldKey, object key, object element)
+        {
+            bool contains = await CheckKeyDuplicateAsync(key);
+            if (contains) return;
+            int index = GetIndexFromKey(oldKey);
             Collection[index] = new DictionaryElement(StringConv, key, element);
             SelectedIndex = index;
             OnMemberChanged?.Invoke();
         }
 
+        
+        
+        
         private async void insertKey(object oldKey, object key, object element)
         {
-            int existingIndex = getIndexFromKey(key);
-            if (existingIndex > -1)
-            {
-                await MessageBoxWindowView.Show(_dialogService, "Dictionary already contains this key!", "Error", MessageBoxWindowView.MessageBoxButtons.Ok);
-                return;
-            }
+            bool contains = await CheckKeyDuplicateAsync(key);
+            if (contains) return;
             bool advancedEdit = false;
-            OnEditItem(key, element, advancedEdit, insertItem);
+            // OnEditItem(key, element, advancedEdit, insertItem);
+            Collection.Add(new DictionaryElement(StringConv, key, element));
+            SelectedIndex = Collection.Count-1;
+            OnMemberChanged?.Invoke();
         }
 
         private void insertItem(object oldKey, object key, object element)
@@ -136,7 +204,7 @@ namespace RogueEssence.Dev.ViewModels
             OnMemberChanged?.Invoke();
         }
 
-        private int getIndexFromKey(object key)
+        public int GetIndexFromKey(object key)
         {
             int curIndex = 0;
             foreach (DictionaryElement item in Collection)
@@ -158,24 +226,28 @@ namespace RogueEssence.Dev.ViewModels
             }
         }
 
-        public void lbxCollection_DoubleClick(object sender, PointerReleasedEventArgs e)
+        public void lbxCollection_DoubleClick(object sender, DataGridCellPointerPressedEventArgs e)
         {
             //int index = lbxDictionary.IndexFromPoint(e.X, e.Y);
             int index = SelectedIndex;
-            KeyModifiers modifiers = e.KeyModifiers;
+            KeyModifiers modifiers = e.PointerPressedEventArgs.KeyModifiers;
             bool advancedEdit = modifiers.HasFlag(KeyModifiers.Shift);
             if (index > -1)
             {
                 DictionaryElement item = Collection[index];
+                // Console.WriteLine();
+                // Console.WriteLine("Key: " + item.IsKeyPrimitive + " Value:" + item.IsValuePrimitive);
+                // Console.WriteLine(item.Key.GetType() + " " + item.Value.GetType());
                 OnEditItem?.Invoke(item.Key, item.Value, advancedEdit, editItem);
             }
         }
 
+        
         public void btnAdd_Click(bool advancedEdit)
         {
             object newKey = null;
             object element = null;
-            OnEditKey?.Invoke(newKey, element, advancedEdit, insertKey);
+            OnAddItem?.Invoke(newKey, element, advancedEdit, insertKey);
         }
 
         public async void btnDelete_Click()

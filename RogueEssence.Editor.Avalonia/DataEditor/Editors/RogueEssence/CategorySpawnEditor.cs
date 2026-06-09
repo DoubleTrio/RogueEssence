@@ -117,7 +117,59 @@ namespace RogueEssence.Dev
 
                 _context.TabEvents.AddChildPage(pageViewModel, newEditor);
             };
+            
+             vm.OnAddItem += (object key, object element, bool advancedEdit, DictionaryBoxViewModel.EditElementOp op) =>
+            {
+                EditorPageViewModel pageViewModel = control.FindAncestorViewModel<EditorPageViewModel>();
+                string elementName = name + "<New Item>";
+                string title = DataEditor.GetWindowTitle(parent, elementName, key, keyType,
+                    ReflectionExt.GetPassableAttributes(1, attributes));
 
+                NodeBase node =
+                    _context.NodeFactory.CreateReflectedDataNode<ReflectedDataPageViewModel>(elementName, pageViewModel.Node, pageViewModel.Node.Icon);
+                pageViewModel.Node.AddNodeIfNotExists(node);
+
+                NodeHelper.ExpandParents(node, true);
+                ReflectedDataPageViewModel 
+                    newEditor = _context.PageFactory.CreatePage<ReflectedDataPageViewModel>(node);
+                newEditor.SetPageTitle(title, pageViewModel.Node.Icon);
+
+                newEditor.OnLoadAction = (StackPanel stack) =>
+                {
+                 
+                    TextBlock lblItem = new TextBlock();
+                    lblItem.Text = "Key:";
+                    stack.Children.Add(lblItem);
+                    
+                    DataEditor.LoadClassControls(stack, parent, null, elementName, keyType,
+                        ReflectionExt.GetPassableAttributes(1, attributes), key, true, new Type[0], advancedEdit);
+                    lblItem = new TextBlock();
+                    lblItem.Text = "Value:";
+                    stack.Children.Add(lblItem);
+                    
+                    DataEditor.LoadClassControls(stack, elementName, null, elementName, elementType,
+                        ReflectionExt.GetPassableAttributes(2, attributes), element, true, new Type[0],
+                        advancedEdit);
+                };
+
+                newEditor.OnOKAction = async (StackPanel stack) =>
+                {
+                    // object newKey = DataEditor.SaveClassControls(stack, elementName, keyType,
+                        // ReflectionExt.GetPassableAttributes(1, attributes), true, new Type[0], advancedEdit, 1);
+                    
+                    // object newKey = DataEditor.SaveClassControls(stack, elementName, keyType, ReflectionExt.GetPassableAttributes(1, attributes), true, new Type[0], advancedEdit, 1);
+                    
+                    object newKey = DataEditor.SaveClassControls(stack, elementName, keyType, ReflectionExt.GetPassableAttributes(1, attributes), true, new Type[0], advancedEdit, 1);
+                    element = DataEditor.SaveClassControls(stack, elementName, elementType,
+                        ReflectionExt.GetPassableAttributes(2, attributes), true, new Type[0], advancedEdit, 3);
+                    op(newKey, newKey, element);
+                    return true;
+                };
+
+                _context.TabEvents.AddChildPage(pageViewModel, newEditor);
+            };
+             
+             
             vm.LoadFromDict(member);
             lbxValue.SetListContextMenu(DictionaryEditor.CreateContextMenu(_context.DialogService, control, type, vm));
             control.Children.Add(lbxValue);

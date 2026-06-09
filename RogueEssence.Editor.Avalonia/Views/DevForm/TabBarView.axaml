@@ -206,6 +206,7 @@
                                   x:Name="TabsControl"
                                   ShowDefaultAddButton="False"
                                   TabItemWidth="175"
+                                  AutoScrollToSelectedItem="False"
                                   ScrollViewer.HorizontalScrollBarVisibility="Visible"
                                   Padding="0"
                                   RightThumbWidth="0"
